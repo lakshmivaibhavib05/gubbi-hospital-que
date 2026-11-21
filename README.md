@@ -15,6 +15,6 @@ Version 1.0.0 - Hospital homepage created. More features coming soon.
 
 Open `index.html` in your browser.
 
-## Lakshmi Vaibhavi B
+## Author
 
-Created Lakshmi Vaibhavi B , 1st-year CSE student.
+Created by Lakshmi Vaibhavi B , 1st-year CSE student.
