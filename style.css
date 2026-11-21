@@ -1,0 +1,31 @@
+
+/* Basic page styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f7fa;
+    color: #333;
+}
+
+/* Hospital heading */
+
+h1 {
+    background-color: #075985;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+/* Welcome paragraph */
+
+p {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+}
