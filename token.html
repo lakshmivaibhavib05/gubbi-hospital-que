@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Get a Token - Gubbi Hospital</title>
+  <link rel="stylesheet" href="token.css">
+</head>
+<body>
+
+  <header class="top">
+    <a href="index.html" class="back">Back to home</a>
+    <h1>Get your token</h1>
+    <p>Fill in your details and collect a token number. No need to stand in line.</p>
+  </header>
+
+  <main>
+
+    <!-- Step 1: the form -->
+    <section id="form-section">
+      <form id="token-form">
+        <label for="name">Patient name</label>
+        <input type="text" id="name" placeholder="Enter full name" required>
+
+        <label for="phone">Phone number (optional)</label>
+        <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10">
+
+        <label for="department">Where do you want to go?</label>
+        <select id="department">
+          <option value="G">General OPD</option>
+          <option value="L">Laboratory</option>
+          <option value="P">Pharmacy</option>
+          <option value="D">Dental</option>
+        </select>
+
+        <p id="error" class="error" role="alert"></p>
+
+        <button type="submit">Get my token</button>
+      </form>
+    </section>
+
+    <!-- Step 2: the token slip (hidden until a token is made) -->
+    <section id="token-section" hidden>
+      <div class="slip">
+        <p class="slip-label">Your token</p>
+        <p class="slip-number" id="slip-number">G-001</p>
+        <div class="slip-divider"></div>
+        <dl>
+          <dt>Name</dt><dd id="slip-name"></dd>
+          <dt>Department</dt><dd id="slip-dept"></dd>
+          <dt>Issued at</dt><dd id="slip-time"></dd>
+          <dt>Tokens issued today here</dt><dd id="slip-count"></dd>
+        </dl>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="print-btn">Print token</button>
+        <button type="button" id="new-btn" class="secondary">Get another token</button>
+      </div>
+
+      <p class="note">Please keep this number and wait for it to be called.</p>
+    </section>
+
+  </main>
+
+  <script src="token.js"></script>
+</body>
+</html>
