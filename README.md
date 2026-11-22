@@ -4,7 +4,7 @@ A token (queue number) system for a government hospital in Gubbi, Karnataka. Pat
 
 > Student project. This is not the official hospital website.
 
-**Live site:** https://magenta-ganache-61fc22.netlify.app
+**Live site:** https://onlinetokensystem.netlify.app
 
 ## Features
 
