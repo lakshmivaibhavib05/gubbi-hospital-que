@@ -1,31 +1,116 @@
-
-/* Basic page styling */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --bg: #eef4f3;
+  --card: #ffffff;
+  --ink: #12302f;
+  --muted: #5b7573;
+  --primary: #0b6e69;
+  --primary-dark: #084f4b;
+  --line: #c9dbd9;
 }
+
+* { box-sizing: border-box; }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f7fa;
-    color: #333;
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
 }
 
-/* Hospital heading */
-
-h1 {
-    background-color: #075985;
-    color: white;
-    text-align: center;
-    padding: 30px;
+/* ---------- Top banner ---------- */
+.hero {
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px 60px;
 }
+.hero h1 { margin: 0 0 8px; font-size: 2rem; }
+.hero p { margin: 0; opacity: 0.9; }
+.hero a { color: #fff; }
 
-/* Welcome paragraph */
-
-p {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 18px;
+/* ---------- Homepage cards ---------- */
+.cards {
+  max-width: 900px;
+  margin: -30px auto 40px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
 }
+.card {
+  display: block;
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  padding: 24px;
+  border-radius: 12px;
+  border-top: 5px solid var(--primary);
+  box-shadow: 0 2px 10px rgba(18, 48, 47, 0.12);
+}
+.card:hover { transform: translateY(-3px); }
+.card h2 { margin: 0 0 8px; color: var(--primary); }
+.card p { margin: 0; color: var(--muted); }
+
+footer { text-align: center; color: var(--muted); padding: 20px; }
+
+/* ---------- Staff page ---------- */
+.panel {
+  max-width: 900px;
+  margin: -30px auto 40px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.dept {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(18, 48, 47, 0.12);
+}
+.dept h2 { margin: 0; }
+.dept .small { color: var(--muted); margin: 12px 0 0; }
+.dept .big { font-size: 2.6rem; font-weight: 700; color: var(--primary); margin: 0; }
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover { background: var(--primary-dark); }
+button.reset { max-width: 260px; background: transparent; color: #b3261e; border: 2px solid #b3261e; }
+button.reset:hover { background: #fbe9e7; }
+
+.message { text-align: center; min-height: 1.5em; color: var(--primary-dark); font-weight: 600; }
+.center { text-align: center; padding: 0 16px 40px; }
+
+/* ---------- Now-serving screen (dark, for a big TV) ---------- */
+body.board { background: #0d2423; color: #fff; }
+body.board .hero { background: #0b6e69; }
+.board-grid {
+  max-width: 1000px;
+  margin: -30px auto 20px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.board-row {
+  background: #143a38;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+.board-row h2 { margin: 0; color: #9fd6d1; font-weight: 600; }
+.board-row .token { font-size: 4.5rem; font-weight: 700; margin: 4px 0; letter-spacing: 2px; }
+.board-row .waiting { margin: 0; color: #9fd6d1; }
+.hint { text-align: center; color: #9fd6d1; padding-bottom: 30px; }
