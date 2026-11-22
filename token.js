@@ -1,44 +1,18 @@
-// ---------- Department names (the letter is used in the token, e.g. G-001) ----------
-const departments = {
-  G: "General OPD",
-  L: "Laboratory",
-  P: "Pharmacy",
-  D: "Dental"
-};
+import { db, departments, docId, tokenText } from "./firebase-init.js";
+import { doc, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ---------- Grab the things on the page we need ----------
 const form = document.getElementById("token-form");
 const formSection = document.getElementById("form-section");
 const tokenSection = document.getElementById("token-section");
 const errorBox = document.getElementById("error");
 
-// ---------- Token counters are saved in the browser, and reset every new day ----------
-function todayString() {
-  return new Date().toDateString();
-}
-
-function loadCounters() {
-  const saved = JSON.parse(localStorage.getItem("tokenCounters"));
-  if (saved && saved.date === todayString()) {
-    return saved;
-  }
-  // new day (or first visit): start from zero
-  return { date: todayString(), counts: { G: 0, L: 0, P: 0, D: 0 } };
-}
-
-function saveCounters(counters) {
-  localStorage.setItem("tokenCounters", JSON.stringify(counters));
-}
-
-// ---------- When the form is submitted ----------
-form.addEventListener("submit", function (event) {
-  event.preventDefault(); // stop the page from reloading
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
 
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const code = document.getElementById("department").value;
 
-  // check the inputs
   if (name === "") {
     errorBox.textContent = "Please enter the patient name.";
     return;
@@ -47,32 +21,40 @@ form.addEventListener("submit", function (event) {
     errorBox.textContent = "Phone number must be exactly 10 digits.";
     return;
   }
-  errorBox.textContent = "";
+  errorBox.textContent = "Getting your token...";
 
-  // make the next token number for this department
-  const counters = loadCounters();
-  counters.counts[code] += 1;
-  saveCounters(counters);
+  try {
+    // the database gives out the next number safely, even if many people click at once
+    const ref = doc(db, "queue", docId(code));
+    const number = await runTransaction(db, async function (t) {
+      const snap = await t.get(ref);
+      if (!snap.exists()) {
+        t.set(ref, { issued: 1, serving: 0 });
+        return 1;
+      }
+      const next = snap.data().issued + 1;
+      t.update(ref, { issued: next });
+      return next;
+    });
 
-  const number = counters.counts[code];
-  const tokenText = code + "-" + String(number).padStart(3, "0"); // e.g. G-007
+    document.getElementById("slip-number").textContent = tokenText(code, number);
+    document.getElementById("slip-name").textContent = name;
+    document.getElementById("slip-dept").textContent = departments[code];
+    document.getElementById("slip-time").textContent = new Date().toLocaleTimeString("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+    document.getElementById("slip-count").textContent = number;
 
-  // fill the slip
-  document.getElementById("slip-number").textContent = tokenText;
-  document.getElementById("slip-name").textContent = name;
-  document.getElementById("slip-dept").textContent = departments[code];
-  document.getElementById("slip-time").textContent = new Date().toLocaleTimeString("en-IN", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-  document.getElementById("slip-count").textContent = number;
-
-  // swap the form for the slip
-  formSection.hidden = true;
-  tokenSection.hidden = false;
+    errorBox.textContent = "";
+    formSection.hidden = true;
+    tokenSection.hidden = false;
+  } catch (error) {
+    console.error(error);
+    errorBox.textContent = "Could not get a token. Check your internet and try again.";
+  }
 });
 
-// ---------- Buttons on the slip ----------
 document.getElementById("print-btn").addEventListener("click", function () {
   window.print();
 });

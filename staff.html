@@ -11,17 +11,27 @@
   <header class="hero">
     <a href="index.html">Back to home</a>
     <h1>Staff panel</h1>
-    <p>Click "Call next" when you are ready for the next patient.</p>
+    <p>For hospital staff only.</p>
   </header>
 
-  <p class="message" id="message"></p>
+  <section id="login-box" class="login">
+    <h2>Staff login</h2>
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Staff email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <p class="error" id="login-error"></p>
+      <button type="submit">Log in</button>
+    </form>
+  </section>
 
-  <main class="panel" id="panel"></main>
-
-  <div class="center">
-    <button class="reset" id="reset-btn">Reset all tokens (testing)</button>
+  <div id="staff-area" hidden>
+    <p class="message" id="message">Click "Call next" when you are ready for the next patient.</p>
+    <main class="panel" id="panel"></main>
+    <div class="center">
+      <button class="logout" id="logout-btn">Log out</button>
+    </div>
   </div>
 
-  <script src="staff.js"></script>
+  <script type="module" src="staff.js"></script>
 </body>
 </html>
